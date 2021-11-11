@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">InClass09</string>
     <string name="grades">Grades</string>
+    <string name="courses">Courses</string>
+    <string name="hours">Hours:</string>
+    <string name="gpa">GPA:</string>
+    <string name="course_number">Course Number</string>
+    <string name="course_name">Course Name</string>
+    <string name="credit_hours">Credit Hours</string>
+    <string name="course_grade">Course Grade</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="A">A</string>
+    <string name="B">B</string>
+    <string name="C">C</string>
+    <string name="D">D</string>
+    <string name="E">E</string>
 </resources>
