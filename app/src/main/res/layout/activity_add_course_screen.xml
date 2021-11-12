@@ -82,10 +82,10 @@
             android:text="@string/D" />
 
         <RadioButton
-            android:id="@+id/buttonE"
+            android:id="@+id/buttonF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/E" />
+            android:text="@string/F" />
     </RadioGroup>
 
     <TextView

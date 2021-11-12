@@ -14,5 +14,9 @@
     <string name="B">B</string>
     <string name="C">C</string>
     <string name="D">D</string>
-    <string name="E">E</string>
+    <string name="F">F</string>
+    <string name="invalid_course_number">Enter a valid course number.</string>
+    <string name="invalid_course_name">Enter a valid course name.</string>
+    <string name="invalid_credit_hours">Enter a valid number of credit horus.</string>
+    <string name="select_course_grade">Select a course grade.</string>
 </resources>

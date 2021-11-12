@@ -44,13 +44,11 @@ public class MainActivity extends AppCompatActivity {
         coursesRecyclerViewAdapter = new CoursesRecyclerViewAdapter(courses);
         coursesRecyclerView.setAdapter(coursesRecyclerViewAdapter);
 
-
         //testing for database
         /*
         db.courseDAO().insertAll(new Course("ITCS 4180", "Mobile App Development", 3, 'A'));
         Log.d("TAG", "OnCreate: " + db.courseDAO().getAll());
         */
-
 
         //todo remove temporary button and add screen move to title bar
         //using temp button to switch between screens
