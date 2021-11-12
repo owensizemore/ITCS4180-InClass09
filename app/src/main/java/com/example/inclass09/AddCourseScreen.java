@@ -1,7 +1,10 @@
 package com.example.inclass09;
 
+import static com.example.inclass09.MainActivity.COURSE_KEY;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -13,6 +16,7 @@ public class AddCourseScreen extends AppCompatActivity {
     TextView editTextCourseNumber, editTextCourseName, editTextCreditHours;
     RadioGroup radioGroup;
 
+    char courseGrade = 'E';
     double courseGradePoints = -1.0;
 
     @Override
@@ -31,14 +35,19 @@ public class AddCourseScreen extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if (i == R.id.buttonA) {
+                    courseGrade = 'A';
                     courseGradePoints = 4.0;
                 } else if (i == R.id.buttonB) {
+                    courseGrade = 'B';
                     courseGradePoints = 3.0;
                 } else if (i == R.id.buttonC) {
+                    courseGrade = 'C';
                     courseGradePoints = 2.0;
                 } else if (i == R.id.buttonD) {
+                    courseGrade = 'D';
                     courseGradePoints = 1.0;
                 } else if (i == R.id.buttonF) {
+                    courseGrade = 'F';
                     courseGradePoints = 0.0;
                 }
             }
@@ -49,18 +58,21 @@ public class AddCourseScreen extends AppCompatActivity {
             public void onClick(View view) {
                 String courseNumber = editTextCourseNumber.getText().toString();
                 String courseName = editTextCourseName.getText().toString();
-                String creditHours = editTextCreditHours.getText().toString();
+                int courseCreditHours = Integer.parseInt(editTextCreditHours.getText().toString());
 
                 if (courseNumber.trim().isEmpty()) {
                     Toast.makeText(getApplicationContext(), getString(R.string.invalid_course_number), Toast.LENGTH_SHORT).show();
                 } else if (courseName.trim().isEmpty()) {
                     Toast.makeText(getApplicationContext(), getString(R.string.invalid_course_name), Toast.LENGTH_SHORT).show();
-                } else if (creditHours.trim().isEmpty() || Integer.parseInt(creditHours) == 0) {
+                } else if (courseCreditHours == 0) {
                     Toast.makeText(getApplicationContext(), getString(R.string.invalid_credit_hours), Toast.LENGTH_SHORT).show();
                 } else if (courseGradePoints < 0) {
                     Toast.makeText(getApplicationContext(), getString(R.string.select_course_grade), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "SUCCESS!", Toast.LENGTH_SHORT).show();
+                    Course course = new Course(courseNumber, courseName, courseCreditHours, courseGrade, courseGradePoints * courseCreditHours);
+                    Intent intent = new Intent(AddCourseScreen.this, MainActivity.class);
+                    intent.putExtra(COURSE_KEY, course);
+                    startActivity(intent);
                 }
             }
         });

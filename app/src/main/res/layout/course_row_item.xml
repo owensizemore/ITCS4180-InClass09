@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/courseNumberTextView" />
 
     <TextView
-        android:id="@+id/creditHoursTextView"
+        android:id="@+id/courseCreditHoursTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

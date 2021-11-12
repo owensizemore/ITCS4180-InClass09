@@ -3,7 +3,6 @@ package com.example.inclass09;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -31,6 +30,12 @@ public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecy
     @Override
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
         Course course = courses.get(position);
+
+        holder.courseNumber.setText(course.courseNumber);
+        holder.courseName.setText(course.courseName);
+        // TODO replace with non-hardcoded string
+        holder.creditHours.setText(Integer.toString(course.creditHours) + " " + "Credit Hours");
+        holder.courseGrade.setText(String.valueOf(course.courseGrade));
     }
 
     @Override
@@ -49,12 +54,9 @@ public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecy
             super(itemView);
             courseNumber = itemView.findViewById(R.id.courseNumberTextView);
             courseName = itemView.findViewById(R.id.courseNameTextView);
-            creditHours = itemView.findViewById(R.id.creditHoursTextView);
+            creditHours = itemView.findViewById(R.id.courseCreditHoursTextView);
             courseGrade = itemView.findViewById(R.id.courseGradeTextView);
             trashIcon = itemView.findViewById(R.id.trashIconButton);
-
         }
     }
-
-
 }
