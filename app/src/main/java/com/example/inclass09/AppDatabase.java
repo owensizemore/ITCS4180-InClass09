@@ -1,3 +1,10 @@
+/*
+    InClass 09
+    AppDatabase.java
+    Owen Sizemore
+    Dylan Goodman
+ */
+
 package com.example.inclass09;
 
 import androidx.room.Database;
