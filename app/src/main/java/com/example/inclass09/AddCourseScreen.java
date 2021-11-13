@@ -4,6 +4,7 @@
     Owen Sizemore
     Dylan Goodman
  */
+
 package com.example.inclass09;
 
 import static com.example.inclass09.MainActivity.COURSE_KEY;
