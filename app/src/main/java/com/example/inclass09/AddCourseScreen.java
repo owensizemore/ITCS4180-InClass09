@@ -76,5 +76,13 @@ public class AddCourseScreen extends AppCompatActivity {
                 }
             }
         });
+
+        findViewById(R.id.cancelButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddCourseScreen.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

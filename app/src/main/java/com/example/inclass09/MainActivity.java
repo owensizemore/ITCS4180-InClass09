@@ -12,9 +12,10 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CoursesRecyclerViewAdapter.ICoursesRecyclerViewAdapterInterface {
 
     TextView gpaTextView, hoursTextView;
 
@@ -23,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView coursesRecyclerView;
     LinearLayoutManager coursesLayoutManager;
     CoursesRecyclerViewAdapter coursesRecyclerViewAdapter;
+
+    List<Course> courses = new ArrayList<>();
+
+    int totalHours;
+    double totalGradePoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,31 +52,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //getting database DAO and all entries in database
-        List<Course> courses = db.courseDAO().getAll();
-
-        // calculate GPA and total credit hours
-        int totalHours = 0;
-        double totalGradePoints = 0;
-        for (Course c: courses) {
-            totalHours += c.creditHours;
-            totalGradePoints += c.courseGradePoints;
-        }
-        // TODO round this number
-        double gpa = totalGradePoints/totalHours;
-
-        gpaTextView.setText(getString(R.string.gpa) + " " + String.valueOf(gpa));
-        hoursTextView.setText(getString(R.string.hours) + " " + String.valueOf(totalHours));
+        courses = db.courseDAO().getAll();
 
         //setting recyclerView up and passing it the courses list
         coursesRecyclerView = findViewById(R.id.coursesRecyclerView);
         coursesRecyclerView.setHasFixedSize(true);
         coursesLayoutManager = new LinearLayoutManager(this);
         coursesRecyclerView.setLayoutManager(coursesLayoutManager);
-        coursesRecyclerViewAdapter = new CoursesRecyclerViewAdapter(courses);
+        coursesRecyclerViewAdapter = new CoursesRecyclerViewAdapter(courses, this);
         coursesRecyclerView.setAdapter(coursesRecyclerViewAdapter);
 
-        //todo remove temporary button and add screen move to title bar
-        //using temp button to switch between screens
+        setLabels();
+
+        // using button to switch between screens
         findViewById(R.id.toAddCourseBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,8 +74,38 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void setLabels() {
+        gpaTextView.setText(getString(R.string.gpa));
+        hoursTextView.setText(getString(R.string.hours));
+        if (!courses.isEmpty()) {
+            // calculate GPA and total credit hours
+            totalHours = 0;
+            totalGradePoints = 0;
+            for (Course c: courses) {
+                totalHours += c.creditHours;
+                totalGradePoints += c.courseGradePoints;
+            }
+            double gpa = Math.round((totalGradePoints / totalHours) * 100.0) / 100.0;
+
+            gpaTextView.setText(gpaTextView.getText() + " " + String.valueOf(gpa));
+            hoursTextView.setText(hoursTextView.getText() + " " + String.valueOf(totalHours));
+        }
+    }
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void deleteCourse(Course course, int position) {
+        AppDatabase db = Room.databaseBuilder(this, AppDatabase.class, "course.db")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
+
+        //deletes course from database
+        db.courseDAO().delete(course);
+
+        // remove from list
+        courses.remove(course);
+
+        coursesRecyclerViewAdapter.notifyItemRemoved(position);
+        setLabels();
     }
 }

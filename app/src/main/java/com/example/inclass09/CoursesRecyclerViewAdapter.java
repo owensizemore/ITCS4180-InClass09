@@ -1,5 +1,6 @@
 package com.example.inclass09;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
@@ -19,26 +20,26 @@ public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecy
 
      List<Course> courses;
 
-     public CoursesRecyclerViewAdapter(List<Course> courses){
+     public CoursesRecyclerViewAdapter(List<Course> courses, ICoursesRecyclerViewAdapterInterface mListener){
          this.courses = courses;
+         this.mListener = mListener;
      }
 
     @NonNull
     @Override
     public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
          View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_row_item, parent, false);
-         CourseViewHolder courseViewHolder = new CourseViewHolder(view);
+         CourseViewHolder courseViewHolder = new CourseViewHolder(view, mListener);
         return courseViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CourseViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Course course = courses.get(position);
 
         holder.courseNumber.setText(course.courseNumber);
         holder.courseName.setText(course.courseName);
-        // TODO replace with non-hardcoded string
-        holder.creditHours.setText(Integer.toString(course.creditHours) + " " + "Credit Hours");
+        holder.creditHours.setText(Integer.toString(course.creditHours) + " " + holder.itemView.getContext().getString(R.string.credit_hours));
         holder.courseGrade.setText(String.valueOf(course.courseGrade));
 
         AppDatabase db = Room.databaseBuilder(holder.itemView.getContext(), AppDatabase.class, "course.db")
@@ -51,16 +52,12 @@ public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecy
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(view.getContext())
-                        .setTitle(view.getContext().getString(R.string.delete_comment))
-                        .setMessage(view.getContext().getString(R.string.are_you_sure_comment))
+                        .setTitle(view.getContext().getString(R.string.delete_course))
+                        .setMessage(view.getContext().getString(R.string.are_you_sure_course))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                //deletes course from database
-                                db.courseDAO().delete(course);
-                                //removes course from recyclerView list
-                                courses.remove(position);
-                                notifyItemRemoved(position);
+                                mListener.deleteCourse(course, position);
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
@@ -82,7 +79,7 @@ public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecy
         TextView courseGrade;
         ImageButton trashIcon;
 
-        public CourseViewHolder(View itemView){
+        public CourseViewHolder(View itemView, ICoursesRecyclerViewAdapterInterface mListener){
             super(itemView);
             courseNumber = itemView.findViewById(R.id.courseNumberTextView);
             courseName = itemView.findViewById(R.id.courseNameTextView);
@@ -90,5 +87,11 @@ public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecy
             courseGrade = itemView.findViewById(R.id.courseGradeTextView);
             trashIcon = itemView.findViewById(R.id.trashIconButton);
         }
+    }
+
+    ICoursesRecyclerViewAdapterInterface mListener;
+
+    public interface ICoursesRecyclerViewAdapterInterface {
+         void deleteCourse(Course course, int position);
     }
 }
