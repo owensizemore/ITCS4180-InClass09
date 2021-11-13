@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements CoursesRecyclerVi
         setContentView(R.layout.activity_main);
         setTitle(getString(R.string.grades));
 
+
         gpaTextView = findViewById(R.id.gpaTextView);
         hoursTextView = findViewById(R.id.hoursTextView);
 
