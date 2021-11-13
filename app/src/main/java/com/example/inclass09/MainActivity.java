@@ -8,6 +8,8 @@ import androidx.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.TextView;
@@ -74,6 +76,14 @@ public class MainActivity extends AppCompatActivity implements CoursesRecyclerVi
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+
+
+        return true;
+    }
+
     public void setLabels() {
         gpaTextView.setText(getString(R.string.gpa));
         hoursTextView.setText(getString(R.string.hours));
@@ -89,6 +99,9 @@ public class MainActivity extends AppCompatActivity implements CoursesRecyclerVi
 
             gpaTextView.setText(gpaTextView.getText() + " " + String.valueOf(gpa));
             hoursTextView.setText(hoursTextView.getText() + " " + String.valueOf(totalHours));
+        }else{
+            gpaTextView.setText(R.string.gpa4);
+            hoursTextView.setText(R.string.hour0);
         }
     }
 

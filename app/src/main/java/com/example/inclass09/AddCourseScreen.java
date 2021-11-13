@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class AddCourseScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course_screen);
+        setTitle(getString(R.string.add_course));
 
         // Assign layout items
         editTextCourseNumber = findViewById(R.id.editTextCourseNumber);
@@ -59,7 +61,6 @@ public class AddCourseScreen extends AppCompatActivity {
                 String courseNumber = editTextCourseNumber.getText().toString();
                 String courseName = editTextCourseName.getText().toString();
                 int courseCreditHours = Integer.parseInt(editTextCreditHours.getText().toString());
-
                 if (courseNumber.trim().isEmpty()) {
                     Toast.makeText(getApplicationContext(), getString(R.string.invalid_course_number), Toast.LENGTH_SHORT).show();
                 } else if (courseName.trim().isEmpty()) {
