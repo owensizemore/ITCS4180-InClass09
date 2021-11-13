@@ -1,3 +1,9 @@
+/*
+    InClass 09
+    CoursesRecyclerViewAdapter.java
+    Owen Sizemore
+    Dylan Goodman
+ */
 package com.example.inclass09;
 
 import android.annotation.SuppressLint;

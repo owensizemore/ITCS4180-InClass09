@@ -1,3 +1,10 @@
+/*
+    InClass 09
+    MainActivity.java
+    Owen Sizemore
+    Dylan Goodman
+ */
+
 package com.example.inclass09;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements CoursesRecyclerVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle(getString(R.string.grades));
+
 
         gpaTextView = findViewById(R.id.gpaTextView);
         hoursTextView = findViewById(R.id.hoursTextView);
